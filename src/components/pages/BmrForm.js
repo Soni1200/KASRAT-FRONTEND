@@ -115,8 +115,11 @@ class BmrForm extends Component {
   };
 
   handleGenderChange = (event) => {
-    this.setState({ gender: event.target.value });
+    this.setState({ gender: event.target.value }, () => {
+      this.handleBodyfatChange({ target: { value: this.state.bodyfat } });
+    });
   };
+  
 
   handleBodyfatChange = (event) => {
     const bodyfat = event.target.value;
