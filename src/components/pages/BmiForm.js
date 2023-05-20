@@ -83,6 +83,8 @@ class BmiForm extends Component {
       id = 9;
     } else if (data === 'Extremely Obese') {
       id = 10;
+    } else if (data === 'Normal') {
+      id = 11;
     }
 
     return (
@@ -117,7 +119,7 @@ class BmiForm extends Component {
               <Button buttonStyle='btn--custom1'>Submit</Button>
             </div>
             {data && (
-              <div className='btn-form'>
+              <div className='btn-form-pdf'>
                 <Link
                   to={`/pdf/${id}`}
                 >

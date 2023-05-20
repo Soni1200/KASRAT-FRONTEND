@@ -151,6 +151,11 @@
 .table-container{
   z-index: 2;
 }
+.btn-form-pdf{
+  display: flex;
+    justify-content: center;
+  margin-top: 8px;
+}
 
 @keyframes blink {
   0% {
