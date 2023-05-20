@@ -60,7 +60,20 @@ const FormSignup = ({ submitForm }) => {
             value={values.confirmpassword}
             onChange={handleChange}
           />
-          {errors.password2 && <p>{errors.confirmpassword}</p>}
+          {errors.confirmpassword && <p>{errors.confirmpassword}</p>}
+        </div>
+        <div className='form-inputs'>
+          <label className='form-label'>Role</label>
+          <select
+            className='form-input'
+            name='role'
+            value={values.role}
+            onChange={handleChange}
+          >
+            <option value='admin'>Admin</option>
+            <option value='public'>Public</option>
+          </select>
+          {errors.role && <p>{errors.role}</p>}
         </div>
         <button className='form-input-btn' type='submit'>
           Sign up
@@ -70,7 +83,6 @@ const FormSignup = ({ submitForm }) => {
         </span>
       </form>
     </div>
-  
   );
 };
 

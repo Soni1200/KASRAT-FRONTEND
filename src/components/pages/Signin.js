@@ -42,6 +42,8 @@ const Signin = () => {
           />
           {errors.password && <p>{errors.password}</p>}
         </div>
+        {errors.userNotFound && <p className='errormessage'>{errors.userNotFound}</p>}
+
         <button className='form-input-btn' type='submit'>
           Sign In
         </button>

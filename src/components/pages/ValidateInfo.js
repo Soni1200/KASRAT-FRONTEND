@@ -16,10 +16,10 @@ export default function validateInfo(values) {
     errors.password = 'Password needs to be 6 characters or more';
   }
 
-  if (!values.password2) {
-    errors.password2 = 'Password is required';
-  } else if (values.password2 !== values.password) {
-    errors.password2 = 'Passwords do not match';
+  if (!values.confirmpassword) {
+    errors.confirmpassword = 'Confirm Password is required';
+  } else if (values.confirmpassword !== values.password) {
+    errors.confirmpassword = 'Passwords do not match';
   }
   return errors;
 }

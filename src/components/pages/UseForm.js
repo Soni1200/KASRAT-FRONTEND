@@ -5,11 +5,12 @@ const useForm = (submitForm, validate) => {
     username: '',
     email: '',
     password: '',
-    confirmpassword: ''
+    confirmpassword: '',
+    role:''
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false); // Add isSubmitted state
+  const [isSubmitted, setIsSubmitted] = useState(false); 
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -37,9 +38,11 @@ const useForm = (submitForm, validate) => {
       try {
         const response = await fetch(url, options);
         const data = await response.json();
-        console.log(data); // do something with the response data
-        setIsSubmitted(true); // Update isSubmitted state when form is submitted successfully
-        submitForm(values); // Call the submitForm function with form values
+        console.log(data); 
+        if (data.isSuccess) {
+          setIsSubmitted(true);
+        submitForm(values); 
+        }
       } catch (error) {
         console.error(error);
       }
@@ -49,13 +52,13 @@ const useForm = (submitForm, validate) => {
   useEffect(
     () => {
       if (Object.keys(errors).length === 0 && isSubmitting) {
-        setIsSubmitted(true); // Update isSubmitted state when form is submitted successfully
+        setIsSubmitted(true); 
       }
     },
     [errors,isSubmitting]
   );
 
-  return { handleChange, handleSubmit, values, errors, isSubmitted }; // Add isSubmitted to return object
+  return { handleChange, handleSubmit, values, errors, isSubmitted };
 };
 
 export default useForm;

@@ -12,7 +12,8 @@ import FormSign from './components/pages/FormSign';
 import Logout from './components/pages/LogOut';
 import Progress from './components/pages/Progress';
 import Recommendation from './components/pages/recommendation';
-
+import PdfViewer from './components/pages/PdfViewer';
+import FileUploader from './components/pages/FileUpload';
 
 
 
@@ -33,6 +34,8 @@ function App() {
       <Route path= '/Logout' element={<Logout/>}/>
       <Route path= '/Progress' element={<Progress/>}/>
       <Route path= '/Recommendation' element={<Recommendation/>}/>
+      <Route path="/pdf/:id" element={<PdfViewer />} />
+      <Route path="/pdf/upload" element={<FileUploader />} />
       </Routes>
       </Router>
       

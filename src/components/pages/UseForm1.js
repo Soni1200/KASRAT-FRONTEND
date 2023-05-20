@@ -37,8 +37,17 @@ const useForm = (callback, validate) => {
         console.log(data); // do something with the response data
         localStorage.setItem('token',data.token);
         if(data.isSuccess){
+          if(data.role==='admin'){
+          window.location.href='/pdf/upload';
+          }
+          else{
           window.location.href='/Home';
+          }
         }
+else if (!data.isSuccess) {
+  setErrors({ userNotFound: "Invalid Username or Password" });
+}
+
       
       } catch (error) {
         console.error(error);

@@ -68,11 +68,16 @@ class Recommendation extends Component {
       const data = await response.json();
       console.log(data); // do something with the response data
       this.setState({
-        supplement1:data[0],
-        supplement2:data[1],
-        supplement3:data[2],
+        supplement1:data.supplementname[0],
+        supplement2:data.supplementname[1],
+        supplement3:data.supplementname[2],
+        supplement1score: data.recommendedsuppscore[0],
+        supplement2score: data.recommendedsuppscore[1],
+        supplement3score: data.recommendedsuppscore[2],
         loading:false,
       })
+      console.log(data.recommendedsuppscore[0]);
+
     } catch (error) {
       console.error(error);
       this.setState({ loading: false });
@@ -143,6 +148,9 @@ class Recommendation extends Component {
           supplement1={this.state.supplement1}
           supplement2={this.state.supplement2}
           supplement3={this.state.supplement3}
+          supplement1score = {this.state.supplement1score}
+          supplement2score = {this.state.supplement2score}
+          supplement3score = {this.state.supplement3score}
         />
         </div>
           )}
