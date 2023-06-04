@@ -74,6 +74,7 @@ const FileUploader = () => {
             
           <div className="category-select-container">
             <select value={selectedCategory} onChange={handleCategoryChange} className="form-input1">
+            <option value="" className='option'>Select a Category</option>
               <option value="UnderWeight" className='option'>UnderWeight</option>
               <option value="Normal" className='option'>Normal</option>
               <option value="OverWeight" className='option'>OverWeight</option>

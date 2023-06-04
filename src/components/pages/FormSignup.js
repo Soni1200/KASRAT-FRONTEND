@@ -70,6 +70,7 @@ const FormSignup = ({ submitForm }) => {
             value={values.role}
             onChange={handleChange}
           >
+            <option value=''>Select a role</option>
             <option value='admin'>Admin</option>
             <option value='public'>Public</option>
           </select>
