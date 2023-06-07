@@ -2,7 +2,6 @@ import React from 'react';
 import '../App.css';
 import './TopSec.css';
 import './Button.css';
-import { Link } from 'react-router-dom';
 
 const STYLES = ['btn--primary', 'btn--outline','btn--custom1','btn--custom2','btn--custom3'];
 const SIZES = ['btn--medium', 'btn--large'];
@@ -23,7 +22,6 @@ const Button = ({
     window.location.href = '/programs';
   };
   return (
-    <Link to='/' className='btn-mobile'>
       <button
         className={`btn ${checkButtonStyle} ${checkButtonSize}`}
         onClick={handleButtonClick}
@@ -31,7 +29,7 @@ const Button = ({
       >
         {children}
       </button>
-    </Link>
+  
   );
 };
 
