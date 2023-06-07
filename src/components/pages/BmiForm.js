@@ -27,18 +27,45 @@ const Button = ({
   );
 };
 
+
+const BMIvalidateInfo = (values) => {
+let errors = {};
+if (!values.height.trim()) {
+errors.height = 'Height required';
+} else if (Number(values.height) >= 3) {
+errors.height = 'Enter appropriate height in meters';
+}
+if (!values.weight.trim()) {
+errors.weight = 'Weight required';
+} else if (values.weight.length > 3) {
+errors.weight = 'Enter appropriate weight in KGs';
+} else if (Number(values.weight) >= 635) {
+errors.weight = 'Weight should be less than 635 KGs';
+}
+return errors;
+};
+
+
 class BmiForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       height: '',
       weight: '',
+     errors: {},
       data: ''
     };
   }
 
   handleSubmit = async (event) => {
     event.preventDefault();
+
+const errors = BMIvalidateInfo(this.state);
+if (Object.keys(errors).length > 0) {
+this.setState({ errors });
+return;
+}
+
     console.log('Height:', this.state.height);
     console.log('Weight:', this.state.weight);
     const token = localStorage.getItem('token');
@@ -72,7 +99,8 @@ class BmiForm extends Component {
   };
 
   render() {
-    const { data } = this.state;
+const { errors } = this.state;    
+const { data } = this.state;
     let id;
 
     if (data === 'Obese') {
@@ -103,6 +131,7 @@ class BmiForm extends Component {
                 value={this.state.height}
                 onChange={this.handleHeightChange}
               />
+{errors.height && <span className="error-message">{errors.height}</span>}
             </div>
             <div className="form-group">
               <label className='form-label1'>Weight (in kg) : </label>
@@ -114,6 +143,7 @@ class BmiForm extends Component {
                 value={this.state.weight}
                 onChange={this.handleWeightChange}
               />
+{errors.weight && <span className="error-message">{errors.weight}</span>}
             </div>
             <div className='btn-form'>
               <Button buttonStyle='btn--custom1'>Submit</Button>
