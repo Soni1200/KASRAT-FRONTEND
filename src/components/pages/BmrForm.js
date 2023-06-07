@@ -33,6 +33,38 @@ const Button = ({
   );
 };
 
+const BMRvalidateInfo = (values) => {
+  let errors = {};
+  if (!values.height.trim()) {
+    errors.height = 'Height required';
+  } else if (Number(values.height) >= 251) {
+    errors.height = 'Enter appropriate height in centimeters';
+  } 
+  
+  if (!values.weight.trim()) {
+    errors.weight = 'Weight required';
+  } else if (values.weight.length > 3) {
+    errors.weight = 'Enter appropriate weight in KGs';
+  } else if (Number(values.weight) >= 635) {
+    errors.weight = 'Weight should be less than 635 KGs';
+  }
+  if (!values.age.trim()) {
+    errors.age = 'Age required';
+  } else if (Number(values.age) >= 80) {
+    errors.age = 'Enter appropriate age';
+  } else if (Number(values.age) <= 10) {
+    errors.age = 'Enter appropriate age';
+  } 
+  if (!(values.lifestyle === 'Select a Lifestyle')) {
+    errors.lifestyle = 'Please select a lifestyle';
+  }
+    
+  if (!values.bodyfat.trim()) {
+    errors.bodyfat = 'Bodyfat required';
+  }
+  return errors;
+};
+
 class BmrForm extends Component {
   constructor(props) {
     super(props);
@@ -44,13 +76,23 @@ class BmrForm extends Component {
       gender: '',
       bodyfat: '',
       experience: '',
-      goal: ''
+      goal: '',
+      errors: {},
+      
 
     };
   }
 
   handleSubmit = async (event) => {
     event.preventDefault();
+
+    const errors = BMRvalidateInfo(this.state);
+    if (Object.keys(errors).length > 0) {
+      this.setState({ errors });
+      return;
+    }
+
+
     console.log('Height:', this.state.height);
     console.log('Weight:', this.state.weight);
     console.log('Age:', this.state.age);
@@ -156,6 +198,7 @@ class BmrForm extends Component {
   };
 
   render() {
+    const { errors } = this.state;
     return (
       <>
         <Navbar />
@@ -170,7 +213,9 @@ class BmrForm extends Component {
                 name='height'
                 value={this.state.height}
                 onChange={this.handleHeightChange}
+                placeholder='Enter your height in cm'
               />
+              {errors.height && <span className="error-message">{errors.height}</span>}
             </div>
             <div className="form-group">
               <label className='form-label1'> Age : </label>
@@ -180,7 +225,9 @@ class BmrForm extends Component {
                 name='age'
                 value={this.state.age}
                 onChange={this.handleAgeChange}
+                placeholder='Enter your age'
               />
+              {errors.age && <span className="error-message">{errors.age}</span>}
             </div>
             <div className="form-group">
               <label className='form-label1'> Weight (in Kg) : </label>
@@ -190,7 +237,10 @@ class BmrForm extends Component {
                 name='weight'
                 value={this.state.weight}
                 onChange={this.handleWeightChange}
+                placeholder='Enter your weight in kg'
               />
+               {errors.weight && <span className="error-message">{errors.weight}</span>}
+               </div>
               <div className="form-group">
                 <label className='form-label1'> Lifestyle : </label>
                 <select
@@ -199,12 +249,15 @@ class BmrForm extends Component {
                   value={this.state.lifestyle}
                   onChange={this.handleLifestyleChange}
                 >
-                  <option value="" className='option'>Select a lifestyle</option>
+                  <option value="" disabled selected hidden>
+                  Select a Lifestyle
+                  </option>
                   <option value="s" className='option'>Sedentary</option>
                   <option value="la" className='option'>Lightly active</option>
                   <option value="ma" className='option'>Moderately active</option>
                   <option value="ha" className='option'>Very active</option>
                 </select>
+                {errors.lifestyle && <span className="error-message">{errors.lifestyle}</span>} 
               </div>
               <div className="form-group">
                 <label className='form-label1'> Gender : </label>
@@ -214,7 +267,9 @@ class BmrForm extends Component {
                   value={this.state.gender}
                   onChange={this.handleGenderChange}
                 >
-                  <option value="" className='option'>Select Gender</option>
+                   <option value="" disabled selected hidden>
+                  Select Gender
+                  </option>
                   <option value="male" className='option'>Male</option>
                   <option value="female" className='option'>Female</option>
                 </select>
@@ -227,7 +282,9 @@ class BmrForm extends Component {
                   name='bodyfat'
                   value={this.state.bodyfat}
                   onChange={this.handleBodyfatChange}
+                  placeholder='Enter Bodyfat'
                 />
+                {errors.bodyfat && <span className="error-message">{errors.bodyfat}</span>}
               </div>
               <div className="form-group">
                 <label className='form-label1'> Experience : </label>
@@ -237,15 +294,27 @@ class BmrForm extends Component {
                   value={this.state.experience}
                   onChange={this.handleExperienceChange}
                 >
-                  <option value="" className='option'>Select Your Experience Level</option>
+                  <option value="" disabled selected hidden>
+                  Select Your Experience Level
+                  </option>
                   <option value="b" className='option'>Begineer</option>
                   <option value="i" className='option'>Intermediate</option>
                   <option value="a" className='option'>Advanced</option>
                 </select>
               </div>
-              <div className="form-group">
+              
+            <div className='btn-form'>
+              <Button buttonStyle='btn--custom1'>Submit</Button>
+            </div>
+          </form>
+          
+        <div className="table-container">
+        <h1 className='resulttext'>Your Result</h1>
+        <div className="form-group">
+          
                 <label className='form-label1'> Goal : </label>
                 <select
+                id="Select1"
                 className="form-input1"
                 name='goal'
                 value={this.state.goal}
@@ -256,15 +325,8 @@ class BmrForm extends Component {
                 <option value="build muscle">Build Muscle</option>
                 <option value="build muscle lose fat">Recomposition</option>
               </select>
-              </div>
-            </div>
-            <div className='btn-form'>
-              <Button buttonStyle='btn--custom1'>Submit</Button>
-            </div>
-          </form>
-          
-        <div className="table-container">
-        <h1 className='resulttext'>Your Result</h1>
+        </div>
+        <label className='form-label2'> Nutrition Breakdown : </label>
         <NutritionInfo
           carbohydrate={this.state.carbohydrate}
           protein={this.state.protein}
@@ -297,8 +359,8 @@ class BmrForm extends Component {
 </div>
         <Footer />
       </>
-    );
-  }
+);
+}
 }
 
 export default BmrForm;
